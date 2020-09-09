@@ -1,13 +1,13 @@
-prop_type: assignment
+prop_type: heavy
 
-target_CRO: Supreme_Judge
+value: 400,000,000,000,000yen
 
-reason: Former supreme judege John Doe has died and so new promising layer Tony Yang is suitable for our new supreme judge.
+reason: To manage this high price level by issueing reserve currency in the currency smart contract.
 
-pros: We need a tech-savvy liberal judge in the supreme court judges.
+pros: We can manage price level and get a lot of public fund.
 
-cons: He is 35 years old, it can be too young.
+cons: Hyper inflation.
 
-approximate_cost: Announcing, printing, uniforms, work tools, and salary.
+approximate_cost: Announcing, printing.
 
-budget_required: {{ 30.000,000yen per year }}
+budget_required: None
