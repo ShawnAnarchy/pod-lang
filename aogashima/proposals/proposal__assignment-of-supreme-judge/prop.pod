@@ -1,0 +1,13 @@
+prop_type: assignment
+
+target_CRO: Supreme_Judge
+
+reason: Former supreme judege John Doe has died and so new promising layer Tony Yang is suitable for our new supreme judge.
+
+pros: We need a tech-savvy liberal judge in the supreme court judges.
+
+cons: He is 35 years old, it can be too young.
+
+approximate_cost: Announcing, printing, uniforms, work tools, and salary.
+
+budget_required: {{ 30.000,000yen per year }}

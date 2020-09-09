@@ -1,0 +1,9 @@
+subject:
+  A house has not to use asbestos for its ingredients of parts.
+
+  A house has to pass a earthquake test that is defined in {{ Earthquake_Test_of_Housing }}
+
+
+Earthquake_Test_of_Housing: Refer(建築基準法_第六条の三_構造計算適合性判定.pdf)
+
+administration: Administration_of_HouseSpec
