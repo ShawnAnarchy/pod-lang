@@ -26,3 +26,4 @@ A language for proposing an administration and a law
 ## Dev Tips
 - `node parserGenerator.js` outputs parser file
 - `rollup -c && node index.js` for dev iteration
+- `NODE_ENV=test rollup -c && jest ./test/index.test.js` for running test

@@ -3,10 +3,20 @@ import typescript from '@rollup/plugin-typescript';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json';
+let infile,outfile;
+if(process.env.NODE_ENV === 'test') {
+  infile = './test/index.test.ts'
+  outfile = './test/index.test.js'
+}else {
+  infile = './index.ts'
+  outfile = './index.js'
+}
+
+
 export default {
-  input: 'index.ts',
+  input: infile,
   output: {
-    file: './index.js',
+    file: outfile,
     sourcemap:true
   },
   plugins: [
