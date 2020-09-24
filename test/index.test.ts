@@ -3,6 +3,6 @@ parser;// To avoid rollup's tree shaking
 
 
 test('Parsing sample', () => {
-  const parsed = global.parser.parse('1+1');
-  expect(parsed).toBe(2);
+  const parsed = global.parser.parse('problem: Our ship frequency is not sufficient!');
+  expect(parsed.problem).toBe("Our ship frequency is not sufficient!");
 });

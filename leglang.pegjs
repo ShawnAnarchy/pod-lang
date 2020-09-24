@@ -1,17 +1,24 @@
-start
-  = additive
+// Simple Arithmetics Grammar
+// ==========================
+//
+// Accepts expressions like "2 * (3 + 4)" and computes their value.
 
-additive
-  = left:multiplicative "+" right:additive { return left + right; }
-  / multiplicative
+Expression
+  = head:Problem tail:(_ ":" _ Item) {
+      return {
+      	problem: tail[3]
+      }
+    }
 
-multiplicative
-  = left:primary "*" right:multiplicative { return left * right; }
-  / primary
+Problem
+  = _ "problem" _ { return "problem" }
 
-primary
-  = integer
-  / "(" additive:additive ")" { return additive; }
+Item
+  = _ expr:Expression _ { return expr; }
+  / String
 
-integer "integer"
-  = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
+String "string"
+  = _ ([a-zA-Z0-9!?_-]+_?)+ { return text(); }
+
+_ "whitespace"
+  = [ \t\n\r]*

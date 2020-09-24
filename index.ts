@@ -1,8 +1,8 @@
-import * as parser from './arithmetics'
+import * as parser from './leglang'
 parser;// To avoid rollup's tree shaking
 
 try {
-    const sampleOutput = global.parser.parse('1+1');
+    const sampleOutput = global.parser.parse('problem:test');
     console.log(sampleOutput)
 }
 catch (ex)
