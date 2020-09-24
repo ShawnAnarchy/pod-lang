@@ -1,4 +1,4 @@
-# pod lang
+# leglang
 A language for proposing an administration and a law
 
 ## Purpose
