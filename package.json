@@ -41,6 +41,9 @@
     ]
   },
   "scripts": {
-    "test": "NODE_ENV=test rollup -c && jest"
+    "start": "rollup -c && node index.js",
+    "test": "NODE_ENV=test rollup -c && jest",
+    "build:arithmetics": "node parserGenerator.js arithmetics",
+    "build:leg": "node parserGenerator.js leglang"
   }
 }

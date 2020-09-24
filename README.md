@@ -24,6 +24,5 @@ A language for proposing an administration and a law
   - The refering document can be a podlang file or a pdf file which is converted from arbitrary digital data format.
 
 ## Dev Tips
-- `node parserGenerator.js` outputs parser file
-- `rollup -c && node index.js` for dev iteration
-- `NODE_ENV=test rollup -c && jest ./test/index.test.js` for running test
+- `npm run build:leg` outputs parser file
+- `npm test` for running test

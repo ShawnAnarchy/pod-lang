@@ -1,4 +1,4 @@
-import * as parser from '../arithmetics'
+import * as parser from '../leglang'
 parser;// To avoid rollup's tree shaking
 
 
