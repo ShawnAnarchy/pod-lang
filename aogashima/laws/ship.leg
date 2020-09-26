@@ -1,0 +1,33 @@
+
+# problem
+Our ship frequency is not sufficient!
+
+# solutions
+
+## Law of compensating a shipping company
+### header
+out.admin = None 
+out.txs = [{to = shipCo.aogashima.onthe.eth, budget = 10,000 DAI per month}]
+
+
+## Law of encouraging shipping industry with the free market
+### header
+out.admin = shipAdmin.aogashima.onthe.eth
+out.txs = [
+  {to = shipAdmin.aogashima.onthe.eth, budget = 2,000 DAI per month}
+]
+
+### laws
+#### Permission of a individual shipping business
+- Anyone can let customers move other islands by charging arbitrary fee.
+
+#### Prohibition of the illegal ships
+- {shipAdmin.aogashima.onthe.eth} has to check the ships randomly
+- The ships have to apply the national ship license
+- The ships have to equip available life jackets more than the number of capacity.
+
+#### Permission of ship matching apps
+- The matching app can introduce ships to customers
+- The matching app has to identify the ship sailers
+- The matching app has to give accurate review to the ship sailers
+- The ship sailers have to collateralize their fund in order to be premium sailers
