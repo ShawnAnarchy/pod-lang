@@ -68,13 +68,13 @@ _LawTitle = head:(String  _ __) { return head.filter(a=>a)[0].trim() }
 LawTitle = head:(QSHARP _LawTitle) { return head.filter(a=>a)[0].trim() }
 HeaderLogic
   = "Subset.new" head:SubsetName _ __ tail:HeaderLogic+ {
-  	return { new: head, assign: "", txs: tail.filter(a=>a)[0] }
+  	return { new: head, assign: "", vestings: tail[0].vestings }
   }
   / "Subset.assign" _ head:HeaderAdminExpression _ __ tail:HeaderLogic+ {
-  	return { new: "", assign: head, txs: tail.filter(a=>a)[0] }
+  	return { new: "", assign: head, vestings: tail[0].vestings }
   }
-  / "Transaction.new" _ main:HeaderTxsExpression _ __ {
-  	return main.filter(a=>a)
+  / "Vesting.set" _ main:HeaderTxsExpression _ __ {
+  	return { new: "", assign: "", vestings: main.filter(a=>a) }
   }
 SubsetName = _ __ '"' ([a-zA-Z0-9_] _)+ '"' _ __ { return text().replace(/("|\n)/g, "").trim() }
 HeaderAdminExpression = NONE / AddressString / ENSString { return text() }
