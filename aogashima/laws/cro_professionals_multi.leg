@@ -1,0 +1,21 @@
+
+# problem
+High demand for financial system professionals!
+
+# solutions
+
+## Assign Westerners
+### command
+Professional.set [
+  { to = alice.aogashima.onthe.eth, vesting=20,000DAI, term = 4yrs }
+  { to = bob.aogashima.onthe.eth, vesting=20,000DAI, term = 4yrs }
+  { to = carl.aogashima.onthe.eth, vesting=20,000DAI, term = 4yrs }
+] "financial system"
+
+## Assign Japanese
+### command
+Professional.set [
+  { to = taro.aogashima.onthe.eth, vesting=14,000DAI, term = 3yrs }
+  { to = jiro.aogashima.onthe.eth, vesting=14,000DAI, term = 3yrs }
+  { to = saburo.aogashima.onthe.eth, vesting=14,000DAI, term = 3yrs }
+] "financial system"

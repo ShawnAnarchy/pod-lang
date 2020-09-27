@@ -111,23 +111,47 @@ CommandLogic
   / "Vesting.sub" _ main:CommandTxsExpression _ __ {
   	return { new: "", assign: "", vestings: main.filter(a=>a) }
   }
+  / "Facilitator.set" _ main:CommandTxsExpression _ __ {
+  	return { new: "", assign: "", vestings: main.filter(a=>a) }
+  }
+  / "Professional.set" _ main:CommandTxsExpression _ '\"'tag:[a-zA-Z0-9_\ ]+'"' __ {
+  	return { new: "", assign: "", vestings: main.filter(a=>a), tag:tag.join("") }
+  }  
+  / "SupremeJudge.set" _ main:CommandTxsExpression _ __ {
+  	return { new: "", assign: "", vestings: main.filter(a=>a) }
+  }  
+  
+
 SubsetName = _ __ '"' ([a-zA-Z0-9_] _)+ '"' _ __ { return text().replace(/("|\n)/g, "").trim() }
 CommandAddressExpression = NONE / AddressString / ENSString { return text() }
 CommandTxsExpression =
 	LSq main:CommandTxsExpression RSq { return main } /
     main:(TxObj)+ { return main }
 
-TxObj = LWavy to:TxToExpression Comma vesting:TxVestingExpression RWavy Comma? {
-	return { to:to, vesting:vesting }
+TxObj = LWavy to:TxToExpression Comma
+		vesting:TxVestingExpression Comma?
+        term:TxTermExpression?
+        RWavy Comma? {
+	return { to:to, vesting:vesting, term: term }
 }
 TxToExpression
-	= "to =" _ main:NEW_SUBSET { return "NEW_SUBSET" } /
-      "to =" _ main:AddressString { return main } / 
-	  "to =" _ main:ENSString { return main } 
+	= "to"_"=" _ main:NEW_SUBSET { return "NEW_SUBSET" } /
+      "to"_"=" _ main:AddressString { return main } / 
+	  "to"_"=" _ main:ENSString { return main } 
 TxVestingExpression
-	= "vesting =" _ main:([\-0-9,]+) " DAI per month" {
+	= "vesting"_"=" _ main:([\-0-9,]+) _"DAI per month" {
     	return parseInt(main.toString().split(",").join(""))
     }
+	/ "vesting"_"=" _ main:([\-0-9,]+) _"DAI" {
+    	return parseInt(main.toString().split(",").join(""))
+    }
+TxTermExpression
+	= "term"_"=" _ main:([0-9,]+) _"yrs" {
+    	return parseInt(main.toString().split(",").join(""))
+    }
+    / "term"_"=" _ main:([0-9,]+) _"years" {
+    	return parseInt(main.toString().split(",").join(""))
+    } 
 
 BulletPoints = BulletLine+
 BulletLine = head:(_ TICK _ __ String __ ){ return head.filter(a=>a)[0] }

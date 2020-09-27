@@ -1,0 +1,17 @@
+
+# problem
+A facilitator has been retired and a replacement is required.
+
+# solutions
+
+## Assign Taro
+### command
+Facilitator.set [
+  { to = taro.aogashima.onthe.eth, vesting=20,000DAI, term = 4yrs }
+]
+
+## Assign Jiro
+### command
+Facilitator.set [
+  { to = jiro.aogashima.onthe.eth, vesting=14,000DAI, term = 3yrs }
+]

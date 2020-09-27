@@ -1,0 +1,17 @@
+
+# problem
+A judge has been retired and a replacement is required.
+
+# solutions
+
+## Assign Goro
+### command
+SupremeJudge.set [
+  { to = goro.aogashima.onthe.eth, vesting=20,000DAI, term = 10years }
+]
+
+## Assign Shiro
+### command
+SupremeJudge.set [
+  { to = shiro.aogashima.onthe.eth, vesting=24,000DAI, term = 10years }
+]
