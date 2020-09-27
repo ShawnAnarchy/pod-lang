@@ -77,7 +77,7 @@ HeaderLogic
   	return main.filter(a=>a)
   }
 SubsetName = _ __ '"' ([a-zA-Z0-9_] _)+ '"' _ __ { return text().replace(/("|\n)/g, "").trim() }
-HeaderAdminExpression = "None" / AddressString / ENSString { return text() }
+HeaderAdminExpression = NONE / AddressString / ENSString { return text() }
 HeaderTxsExpression =
 	LSq main:HeaderTxsExpression RSq { return main } /
     main:(TxObj)+ { return main }
@@ -86,7 +86,8 @@ TxObj = LWavy to:TxToExpression Comma budget:TxBudgetExpression RWavy Comma? {
 	return { to:to, budget:budget }
 }
 TxToExpression
-	= "to =" _ main:AddressString { return main } / 
+	= "to =" _ main:NEW_SUBSET { return "NEW_SUBSET" } /
+      "to =" _ main:AddressString { return main } / 
 	  "to =" _ main:ENSString { return main } 
 TxBudgetExpression
 	= "budget =" _ main:([0-9,]+) " DAI per month" {
@@ -111,10 +112,12 @@ LSq = _ __ "[" _ __ { return }
 RSq = _ __ "]" _ __ { return }
 Comma = _ __ "," _ __ { return }
 String "String"
-  = _ ([a-zA-Z0-9!?_\\-\\$\\.\\:\\=\[\]\{\}\,]+_?)+ { return text(); }
+  = _ ([a-zA-Z0-9!?_\\-\\$\\.\\:\\=\[\]\{\}\,]+_?)+ { return text().trim(); }
 ExprString "Expression String"
-  = _ ([a-zA-Z0-9!?_\\$\\.\\:\[\]\{\}\,]+_?)+ { return text(); }
+  = _ ([a-zA-Z0-9!?_\\$\\.\\:\[\]\{\}\,]+_?)+ { return text().trim(); }
 AddressString "Address String"
-  = _ ("0x"[a-zA-Z0-9]+) _ { return text(); }
+  = _ ("0x"[a-zA-Z0-9]+) _ { return text().trim(); }
 ENSString "ENS String"
-  = _ ([a-zA-Z0-9]+ ".")+ "eth" _ { return text(); }
+  = _ ([a-zA-Z0-9]+ ".")+ "eth" _ { return text().trim(); }
+NEW_SUBSET "New Subset Reserved Constant" = _ "NEW_SUBSET" _ { return text().trim() }
+NONE "None type" = _ "None" _ { return text().trim() }
