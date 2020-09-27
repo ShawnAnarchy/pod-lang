@@ -1,0 +1,17 @@
+
+# problem
+The Ship Management Administration is excellent and we have to invest more!
+
+# solutions
+
+## Hire 0.5 person per month
+### command
+Vesting.add [{to = shipCo.aogashima.onthe.eth, vesting = 1000 DAI per month }]
+
+## Hire 1 person per month
+### command
+Vesting.add [{to = shipCo.aogashima.onthe.eth, vesting = 2000 DAI per month }]
+
+## Hire 2 person per month
+### command
+Vesting.add [{to = shipCo.aogashima.onthe.eth, vesting = 4000 DAI per month }]

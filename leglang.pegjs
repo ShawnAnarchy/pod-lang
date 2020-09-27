@@ -87,6 +87,12 @@ CommandLogic
   / "Vesting.set" _ main:CommandTxsExpression _ __ {
   	return { new: "", assign: "", vestings: main.filter(a=>a) }
   }
+  / "Vesting.add" _ main:CommandTxsExpression _ __ {
+  	return { new: "", assign: "", vestings: main.filter(a=>a) }
+  }
+  / "Vesting.sub" _ main:CommandTxsExpression _ __ {
+  	return { new: "", assign: "", vestings: main.filter(a=>a) }
+  }
 SubsetName = _ __ '"' ([a-zA-Z0-9_] _)+ '"' _ __ { return text().replace(/("|\n)/g, "").trim() }
 CommandAddressExpression = NONE / AddressString / ENSString { return text() }
 CommandTxsExpression =
@@ -101,7 +107,7 @@ TxToExpression
       "to =" _ main:AddressString { return main } / 
 	  "to =" _ main:ENSString { return main } 
 TxVestingExpression
-	= "vesting =" _ main:([0-9,]+) " DAI per month" {
+	= "vesting =" _ main:([\-0-9,]+) " DAI per month" {
     	return parseInt(main.toString().split(",").join(""))
     }
 

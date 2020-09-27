@@ -1,0 +1,17 @@
+
+# problem
+The Ship Management Administration is imcompetent!
+
+# solutions
+
+## Reduce budget a bit
+### command
+Vesting.sub [{to = shipCo.aogashima.onthe.eth, vesting = -100 DAI per month }]
+
+## Reduce budget more
+### command
+Vesting.sub [{to = shipCo.aogashima.onthe.eth, vesting = -250 DAI per month }]
+
+## Just Replace
+### command
+Subset.replaceOfficerBySubsetId shipCo.aogashima.onthe.eth, jiro.aogashima.onthe.eth

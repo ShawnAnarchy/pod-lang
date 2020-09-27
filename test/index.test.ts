@@ -72,3 +72,40 @@ describe('Law addition without the command', () => {
     expect(parsed.solutions[0].lawObj[0][1][0]).toBe("You can't have any ships.");
   });
 })
+
+
+describe('Negative Vesting of Ship Management', () => {
+  const parsed = global.parser.parse(readFileSync('./aogashima/laws/sma_negative_vesting.leg').toString());
+
+  it('has a problem', () => {
+    expect(parsed.problem).toBe("The Ship Management Administration is imcompetent!");
+  });
+
+  it('has some solutions', () => {
+    expect(parsed.solutions[0].commandObj.vestings[0].to).toBe("shipCo.aogashima.onthe.eth");
+    expect(parsed.solutions[0].commandObj.vestings[0].vesting).toBe(-100);
+    expect(parsed.solutions[1].commandObj.vestings[0].to).toBe("shipCo.aogashima.onthe.eth");
+    expect(parsed.solutions[1].commandObj.vestings[0].vesting).toBe(-250);
+    expect(parsed.solutions[2].commandObj.assign.subsetAddr).toBe("shipCo.aogashima.onthe.eth");
+    expect(parsed.solutions[2].commandObj.assign.newOfficer).toBe("jiro.aogashima.onthe.eth");
+  });
+
+});
+
+describe('Budget top-up of Ship Management', () => {
+  const parsed = global.parser.parse(readFileSync('./aogashima/laws/sma_topup.leg').toString());
+
+  it('has a problem', () => {
+    expect(parsed.problem).toBe("The Ship Management Administration is excellent and we have to invest more!");
+  });
+
+  it('has some solutions', () => {
+    expect(parsed.solutions[0].commandObj.vestings[0].to).toBe("shipCo.aogashima.onthe.eth");
+    expect(parsed.solutions[0].commandObj.vestings[0].vesting).toBe(1000);
+    expect(parsed.solutions[1].commandObj.vestings[0].to).toBe("shipCo.aogashima.onthe.eth");
+    expect(parsed.solutions[1].commandObj.vestings[0].vesting).toBe(2000);
+    expect(parsed.solutions[2].commandObj.vestings[0].to).toBe("shipCo.aogashima.onthe.eth");
+    expect(parsed.solutions[2].commandObj.vestings[0].vesting).toBe(4000);
+  });
+
+});
