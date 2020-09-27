@@ -6,7 +6,7 @@ Our ship frequency is not sufficient!
 
 
 ## Law of encouraging shipping industry with a new administration new by using the free market
-### header
+### command
 Subset.new "Ship Management Administration"
 Vesting.set [{to = NEW_SUBSET, vesting = 2,000 DAI per month}]
 
@@ -28,7 +28,7 @@ Vesting.set [{to = NEW_SUBSET, vesting = 2,000 DAI per month}]
 
 
 ## Law of encouraging shipping industry with a existing administration new by using the free market
-### header
+### command
 Subset.assign shipAdmin.aogashima.onthe.eth
 Vesting.set [{to = shipAdmin.aogashima.onthe.eth, vesting = 2,000 DAI per month}]
 
@@ -49,7 +49,7 @@ Vesting.set [{to = shipAdmin.aogashima.onthe.eth, vesting = 2,000 DAI per month}
 
 
 ## Law of compensating a shipping company
-### header
+### command
 Vesting.set [
   {to = shipCo.aogashima.onthe.eth, vesting = 10,000 DAI per month}
   {to = 0xee0B645Bb006d9bcE9227Ba53E31D117D533eF5c, vesting = 200 DAI per month}

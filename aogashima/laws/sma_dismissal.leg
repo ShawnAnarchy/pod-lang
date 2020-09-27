@@ -5,13 +5,13 @@ The Ship Management Administration is imcompetent!
 # solutions
 
 ## Replace with Jiro
-### header
+### command
 Subset.replaceOfficerBySubsetId shipCo.aogashima.onthe.eth, jiro.aogashima.onthe.eth
 
 ## Replace with Saburo
-### header
+### command
 Subset.replaceOfficerBySubsetId shipCo.aogashima.onthe.eth, saburo.aogashima.onthe.eth
 
 ## Replace with Shiro
-### header
+### command
 Subset.replaceOfficerBySubsetId shipCo.aogashima.onthe.eth, shiro.aogashima.onthe.eth

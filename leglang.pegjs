@@ -47,18 +47,18 @@ Solutions
 A_SOLUTION
   = head:(
     SolutionName
-    HeaderClause?
+    CommandClause?
     LawClause? _ __) {
       return {
         solutionName: head[0],
-        headerObj: head[1],
+        commandObj: head[1],
         lawObj: head[2]
       }
     }
 
-HeaderClause = head:(
-	TSHARP HeaderTitle
-  	HeaderLogic
+CommandClause = head:(
+	TSHARP CommandTitle
+  	CommandLogic
   ) { return head.filter(a=>a)[0] }
 LawClause = 
     head:(TSHARP LawPlaceholder
@@ -70,27 +70,27 @@ LawClause =
 
 SolutionName = head:(DSHARP _SolutionName) { return head.filter(a=>a)[0] }
 _SolutionName = head:(_ String _ __) { return head.filter(a=>a)[0] }
-HeaderTitle = String _ __ { return }
+CommandTitle = String _ __ { return }
 LawPlaceholder = String  _ __ { return }
 _LawTitle = head:(String  _ __) { return head.filter(a=>a)[0].trim() }
 LawTitle = head:(QSHARP _LawTitle) { return head.filter(a=>a)[0].trim() }
-HeaderLogic
-  = "Subset.new" head:SubsetName _ __ tail:HeaderLogic* {
+CommandLogic
+  = "Subset.new" head:SubsetName _ __ tail:CommandLogic* {
   	return { new: head, assign: "", vestings: tail[0].vestings }
   }
-  / "Subset.assign" _ head:HeaderAddressExpression _ __ tail:HeaderLogic* {
+  / "Subset.assign" _ head:CommandAddressExpression _ __ tail:CommandLogic* {
   	return { new: "", assign: head, vestings: tail[0].vestings }
   }
-  / "Subset.replaceOfficerBySubsetId" _ subsetAddr:HeaderAddressExpression _ Comma _ newOfficer:HeaderAddressExpression _ __ tail:HeaderLogic* {
+  / "Subset.replaceOfficerBySubsetId" _ subsetAddr:CommandAddressExpression _ Comma _ newOfficer:CommandAddressExpression _ __ tail:CommandLogic* {
   	return { new: "", assign: { subsetAddr:subsetAddr, newOfficer: newOfficer }, vestings: tail[0] ? tail[0].vestings : [] }
   }
-  / "Vesting.set" _ main:HeaderTxsExpression _ __ {
+  / "Vesting.set" _ main:CommandTxsExpression _ __ {
   	return { new: "", assign: "", vestings: main.filter(a=>a) }
   }
 SubsetName = _ __ '"' ([a-zA-Z0-9_] _)+ '"' _ __ { return text().replace(/("|\n)/g, "").trim() }
-HeaderAddressExpression = NONE / AddressString / ENSString { return text() }
-HeaderTxsExpression =
-	LSq main:HeaderTxsExpression RSq { return main } /
+CommandAddressExpression = NONE / AddressString / ENSString { return text() }
+CommandTxsExpression =
+	LSq main:CommandTxsExpression RSq { return main } /
     main:(TxObj)+ { return main }
 
 TxObj = LWavy to:TxToExpression Comma vesting:TxVestingExpression RWavy Comma? {
