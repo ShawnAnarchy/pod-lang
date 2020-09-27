@@ -120,7 +120,46 @@ CommandLogic
   / "SupremeJudge.set" _ main:CommandTxsExpression _ __ {
   	return { new: "", assign: "", vestings: main.filter(a=>a) }
   }  
+  / head:(DELIBERATION_VARIABLES __)+  {
+    return head.map(a=>a[0])
+  }
   
+DELIBERATION_VARIABLES =
+    key:"CRKYC_DAILY_CITIZEN_DEREGISTRATABLE_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"FACILITATOR_TERM" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"FACILITATOR_ANNUAL_COMPENSATION" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"FACILITATOR_ASSIGNMENT_DELIBERATION_DURATION" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"FACILITATOR_ASSIGNMENT_DELIBERATION_INITIAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"FACILITATOR_ASSIGNMENT_DELIBERATION_FINAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"FACILITATOR_VOTING_POWER" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"PROFESSIONAL_TERM" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"PROFESSIONAL_ANNUAL_COMPENSATION" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"PROFESSIONAL_ASSIGNMENT_DELIBERATION_DURATION" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"PROFESSIONAL_ASSIGNMENT_DELIBERATION_INITIAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"PROFESSIONAL_ASSIGNMENT_DELIBERATION_FINAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"PROFESSIONAL_VOTING_POWER" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"EMERGENCY_PROFESSIONAL_HEADCOUNT" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"SUPREME_JUDGE_TERM" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"SUPREME_JUDGE_ANNUAL_COMPENSATION" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"SUPREME_JUDGE_ASSIGNMENT_DELIBERATION_DURATION" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"SUPREME_JUDGE_ASSIGNMENT_DELIBERATION_INITIAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"SUPREME_JUDGE_ASSIGNMENT_DELIBERATION_FINAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"NORMAL_DELIBERATION_TERM" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"NORMAL_DELIBERATION_INITIAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"NORMAL_DELIBERATION_FINAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"HEAVY_DELIBERATION_TERM" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"HEAVY_DELIBERATION_INITIAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"HEAVY_DELIBERATION_FINAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"HEAVY_DELIBERATION_TRIGGERING_TREASURY_EXPOSURE_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"CURRENCY_ISSUANCE_DELIBERATION_TERM" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"CURRENCY_ISSUANCE_DELIBERATION_INITIAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"CURRENCY_ISSUANCE_DELIBERATION_FINAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"DISMISSAL_DELIBERATION_TERM" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"DISMISSAL_DELIBERATION_INITIAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"DISMISSAL_DELIBERATION_FINAL_JUDGE_APPROVAL_RATE" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"DAILY_DELIBERATION_REWARD" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+  / key:"MIXING_REWARD" _ "=" _ value:[0-9]+ _ __ { var obj={};obj[key]=parseInt(value.join("")); return obj; }
+
 
 SubsetName = _ __ '"' ([a-zA-Z0-9_] _)+ '"' _ __ { return text().replace(/("|\n)/g, "").trim() }
 CommandAddressExpression = NONE / AddressString / ENSString { return text() }
@@ -171,9 +210,9 @@ LSq = _ __ "[" _ __ { return }
 RSq = _ __ "]" _ __ { return }
 Comma = _ __ "," _ __ { return }
 String "String"
-  = _ ([a-zA-Z0-9!?_\\-\\$\\.\\:\\=\[\]\{\}\,\']+_?)+ { return text().trim(); }
+  = _ ([a-zA-Z0-9!?_\-\$\.\:\=\[\]\{\}\,\']+_?)+ { return text().trim(); }
 ExprString "Expression String"
-  = _ ([a-zA-Z0-9!?_\\$\\.\\:\[\]\{\}\,]+_?)+ { return text().trim(); }
+  = _ ([a-zA-Z0-9!?_\$\.\:\[\]\{\}\,]+_?)+ { return text().trim(); }
 AddressString "Address String"
   = _ ("0x"[a-zA-Z0-9]+) _ { return text().trim(); }
 ENSString "ENS String"
