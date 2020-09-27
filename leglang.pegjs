@@ -1,5 +1,16 @@
 Main
-  = __ head: Problem __ tail: Solutions { 
+  = __ head: Problem __ tail: Solutions? { 
+  if(!tail){
+    return {
+      problem: head.problem,
+      solutions: []
+    }
+  }
+
+  function squash(o){  	
+  	return o && typeof o === 'array' ? o.map(a=>typeof a === 'array'?a.filter(b=>b):a).filter(a=>a) : o
+  }
+
   var i;
   var arr = squash(tail.solutions)
   var res=new Array(arr.length);
@@ -11,9 +22,6 @@ Main
     res[i] = item
   }
   
-  function squash(o){  	
-  	return o && typeof o === 'array' ? o.map(a=>typeof a === 'array'?a.filter(b=>b):a).filter(a=>a) : o
-  }
   
   return {
     problem: head.problem,
@@ -67,30 +75,33 @@ LawPlaceholder = String  _ __ { return }
 _LawTitle = head:(String  _ __) { return head.filter(a=>a)[0].trim() }
 LawTitle = head:(QSHARP _LawTitle) { return head.filter(a=>a)[0].trim() }
 HeaderLogic
-  = "Subset.new" head:SubsetName _ __ tail:HeaderLogic+ {
+  = "Subset.new" head:SubsetName _ __ tail:HeaderLogic* {
   	return { new: head, assign: "", vestings: tail[0].vestings }
   }
-  / "Subset.assign" _ head:HeaderAdminExpression _ __ tail:HeaderLogic+ {
+  / "Subset.assign" _ head:HeaderAddressExpression _ __ tail:HeaderLogic* {
   	return { new: "", assign: head, vestings: tail[0].vestings }
+  }
+  / "Subset.replaceOfficerBySubsetId" _ subsetAddr:HeaderAddressExpression _ Comma _ newOfficer:HeaderAddressExpression _ __ tail:HeaderLogic* {
+  	return { new: "", assign: { subsetAddr:subsetAddr, newOfficer: newOfficer }, vestings: tail[0] ? tail[0].vestings : [] }
   }
   / "Vesting.set" _ main:HeaderTxsExpression _ __ {
   	return { new: "", assign: "", vestings: main.filter(a=>a) }
   }
 SubsetName = _ __ '"' ([a-zA-Z0-9_] _)+ '"' _ __ { return text().replace(/("|\n)/g, "").trim() }
-HeaderAdminExpression = NONE / AddressString / ENSString { return text() }
+HeaderAddressExpression = NONE / AddressString / ENSString { return text() }
 HeaderTxsExpression =
 	LSq main:HeaderTxsExpression RSq { return main } /
     main:(TxObj)+ { return main }
 
-TxObj = LWavy to:TxToExpression Comma budget:TxBudgetExpression RWavy Comma? {
-	return { to:to, budget:budget }
+TxObj = LWavy to:TxToExpression Comma vesting:TxVestingExpression RWavy Comma? {
+	return { to:to, vesting:vesting }
 }
 TxToExpression
 	= "to =" _ main:NEW_SUBSET { return "NEW_SUBSET" } /
       "to =" _ main:AddressString { return main } / 
 	  "to =" _ main:ENSString { return main } 
-TxBudgetExpression
-	= "budget =" _ main:([0-9,]+) " DAI per month" {
+TxVestingExpression
+	= "vesting =" _ main:([0-9,]+) " DAI per month" {
     	return parseInt(main.toString().split(",").join(""))
     }
 

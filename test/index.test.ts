@@ -2,8 +2,15 @@ import * as parser from '../leglang'
 parser;// To avoid rollup's tree shaking
 let readFileSync = require('fs').readFileSync
 
-describe('Ship Management', () => {
-  const parsed = global.parser.parse(readFileSync('./aogashima/laws/ship.leg').toString());
+describe('Problem Decalaration of Ship Management', () => {
+  const parsed = global.parser.parse(readFileSync('./aogashima/laws/ship_management_only_problem.leg').toString());
+  it('has a problem', () => {
+    expect(parsed.problem).toBe("Our ship frequency is not sufficient!");
+  });
+})
+
+describe('Creation of Ship Management', () => {
+  const parsed = global.parser.parse(readFileSync('./aogashima/laws/ship_management_administration_creation.leg').toString());
 
   it('has a problem', () => {
     expect(parsed.problem).toBe("Our ship frequency is not sufficient!");
@@ -19,7 +26,7 @@ describe('Ship Management', () => {
     expect(parsed.solutions[0].headerObj.assign).toBe("");
     expect(parsed.solutions[0].headerObj.vestings.length).toBe(1);
     expect(parsed.solutions[0].headerObj.vestings[0].to).toBe("NEW_SUBSET");
-    expect(parsed.solutions[0].headerObj.vestings[0].budget).toBe(2000);
+    expect(parsed.solutions[0].headerObj.vestings[0].vesting).toBe(2000);
     expect(parsed.solutions[0].lawObj[0][0]).toBe("Permission of a individual shipping business");
     expect(parsed.solutions[0].lawObj[0][1][0]).toBe("Anyone can let customers move other islands by charging arbitrary fee.");
   });
@@ -31,8 +38,27 @@ describe('Ship Management', () => {
     expect(parsed.solutions[2].headerObj.assign).toBe("");
     expect(parsed.solutions[2].headerObj.vestings[0].to).toBe("shipCo.aogashima.onthe.eth");
     expect(parsed.solutions[2].headerObj.vestings[1].to).toBe("0xee0B645Bb006d9bcE9227Ba53E31D117D533eF5c");
-    expect(parsed.solutions[2].headerObj.vestings[0].budget).toBe(10000);
-    expect(parsed.solutions[2].headerObj.vestings[1].budget).toBe(200);
+    expect(parsed.solutions[2].headerObj.vestings[0].vesting).toBe(10000);
+    expect(parsed.solutions[2].headerObj.vestings[1].vesting).toBe(200);
     expect(!!parsed.solutions[2].lawObj).toBe(false);
   });
 });
+
+describe('Dismissal of Ship Management', () => {
+  const parsed = global.parser.parse(readFileSync('./aogashima/laws/ship_management_administration_dismissal.leg').toString());
+
+  it('has a problem', () => {
+    expect(parsed.problem).toBe("The Ship Management Administration is imcompetent!");
+  });
+
+  it('has some solutions', () => {
+    expect(parsed.solutions[0].headerObj.assign.subsetAddr).toBe("shipCo.aogashima.onthe.eth");
+    expect(parsed.solutions[0].headerObj.assign.newOfficer).toBe("jiro.aogashima.onthe.eth");
+    expect(parsed.solutions[1].headerObj.assign.subsetAddr).toBe("shipCo.aogashima.onthe.eth");
+    expect(parsed.solutions[1].headerObj.assign.newOfficer).toBe("saburo.aogashima.onthe.eth");
+    expect(parsed.solutions[2].headerObj.assign.subsetAddr).toBe("shipCo.aogashima.onthe.eth");
+    expect(parsed.solutions[2].headerObj.assign.newOfficer).toBe("shiro.aogashima.onthe.eth");
+  });
+
+});
+
