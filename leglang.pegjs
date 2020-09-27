@@ -47,7 +47,7 @@ Solutions
 A_SOLUTION
   = head:(
     SolutionName
-    HeaderClause
+    HeaderClause?
     LawClause? _ __) {
       return {
         solutionName: head[0],
@@ -123,7 +123,7 @@ LSq = _ __ "[" _ __ { return }
 RSq = _ __ "]" _ __ { return }
 Comma = _ __ "," _ __ { return }
 String "String"
-  = _ ([a-zA-Z0-9!?_\\-\\$\\.\\:\\=\[\]\{\}\,]+_?)+ { return text().trim(); }
+  = _ ([a-zA-Z0-9!?_\\-\\$\\.\\:\\=\[\]\{\}\,\']+_?)+ { return text().trim(); }
 ExprString "Expression String"
   = _ ([a-zA-Z0-9!?_\\$\\.\\:\[\]\{\}\,]+_?)+ { return text().trim(); }
 AddressString "Address String"

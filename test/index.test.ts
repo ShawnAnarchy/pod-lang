@@ -3,14 +3,14 @@ parser;// To avoid rollup's tree shaking
 let readFileSync = require('fs').readFileSync
 
 describe('Problem Decalaration of Ship Management', () => {
-  const parsed = global.parser.parse(readFileSync('./aogashima/laws/ship_management_only_problem.leg').toString());
+  const parsed = global.parser.parse(readFileSync('./aogashima/laws/sma_only_problem.leg').toString());
   it('has a problem', () => {
     expect(parsed.problem).toBe("Our ship frequency is not sufficient!");
   });
 })
 
 describe('Creation of Ship Management', () => {
-  const parsed = global.parser.parse(readFileSync('./aogashima/laws/ship_management_administration_creation.leg').toString());
+  const parsed = global.parser.parse(readFileSync('./aogashima/laws/sma_creation.leg').toString());
 
   it('has a problem', () => {
     expect(parsed.problem).toBe("Our ship frequency is not sufficient!");
@@ -45,7 +45,7 @@ describe('Creation of Ship Management', () => {
 });
 
 describe('Dismissal of Ship Management', () => {
-  const parsed = global.parser.parse(readFileSync('./aogashima/laws/ship_management_administration_dismissal.leg').toString());
+  const parsed = global.parser.parse(readFileSync('./aogashima/laws/sma_dismissal.leg').toString());
 
   it('has a problem', () => {
     expect(parsed.problem).toBe("The Ship Management Administration is imcompetent!");
@@ -62,3 +62,13 @@ describe('Dismissal of Ship Management', () => {
 
 });
 
+describe('Law addition without the header', () => {
+  const parsed = global.parser.parse(readFileSync('./aogashima/laws/sma_only_laws.leg').toString());
+  it('has a problem', () => {
+    expect(parsed.problem).toBe("Ships are dangerous in these days!");
+  });
+  it('has laws', () => {
+    expect(parsed.solutions[0].lawObj[0][0]).toBe("Prohibition of the ships");
+    expect(parsed.solutions[0].lawObj[0][1][0]).toBe("You can't have any ships.");
+  });
+})
