@@ -1,4 +1,4 @@
-Expression
+Main
   = __ head: Problem __ tail: Solutions { 
   var i;
   var arr = squash(tail.solutions)
@@ -28,15 +28,6 @@ Problem
       }
     }
 
-String "string"
-  = _ ([a-zA-Z0-9!?_\\-\\$\\.\\:\\=\[\]\{\}\,]+_?)+ { return text(); }
-
-_ "whitespace"
-  = [ \t]* { return }
-
-__ "newline"
-  = [\n\r]* { return }
-
 Solutions
   = SHARP _ head:"solutions" tail:(__ _ A_SOLUTION)+ {
     return {
@@ -59,7 +50,7 @@ A_SOLUTION
 
 HeaderClause = head:(
 	TSHARP HeaderTitle
-  	(HeaderLogic)+
+  	HeaderLogic
   ) { return head.filter(a=>a)[0] }
 LawClause = 
     head:(TSHARP LawPlaceholder
@@ -76,27 +67,54 @@ LawPlaceholder = String  _ __ { return }
 _LawTitle = head:(String  _ __) { return head.filter(a=>a)[0].trim() }
 LawTitle = head:(QSHARP _LawTitle) { return head.filter(a=>a)[0].trim() }
 HeaderLogic
-  = head:(String _ __) { return head.filter(a=>a)[0] }
- 
-BulletPoints
-  = BulletLine+
+  = "Subset.new" head:SubsetName _ __ tail:HeaderLogic+ {
+  	return { new: head, assign: "", txs: tail.filter(a=>a)[0] }
+  }
+  / "Subset.assign" _ head:HeaderAdminExpression _ __ tail:HeaderLogic+ {
+  	return { new: "", assign: head, txs: tail.filter(a=>a)[0] }
+  }
+  / "Transaction.new" _ main:HeaderTxsExpression _ __ {
+  	return main.filter(a=>a)
+  }
+SubsetName = _ __ '"' ([a-zA-Z0-9_] _)+ '"' _ __ { return text().replace(/("|\n)/g, "").trim() }
+HeaderAdminExpression = "None" / AddressString / ENSString { return text() }
+HeaderTxsExpression =
+	LSq main:HeaderTxsExpression RSq { return main } /
+    main:(TxObj)+ { return main }
+
+TxObj = LWavy to:TxToExpression Comma budget:TxBudgetExpression RWavy Comma? {
+	return { to:to, budget:budget }
+}
+TxToExpression
+	= "to =" _ main:AddressString { return main } / 
+	  "to =" _ main:ENSString { return main } 
+TxBudgetExpression
+	= "budget =" _ main:([0-9,]+) " DAI per month" {
+    	return parseInt(main.toString().split(",").join(""))
+    }
+
+BulletPoints = BulletLine+
 BulletLine = head:(_ TICK _ __ String __ ){ return head.filter(a=>a)[0] }
  
-TICK
-  = "-" { return }
  
- 
-SHARP
-  = "#" { return }
-
-DSHARP
-  = "##" { return }
-
-TSHARP
-  = "###" { return }
-  
-QSHARP
-  = "####" { return }
-
-EOL
-   = [ \t\n\r]+ { return }
+_ "whitespace" = [ \t]* { return }
+__ "newline" = [\n\r]* { return }
+TICK = "-" { return }
+SHARP = "#" { return }
+DSHARP = "##" { return }
+TSHARP = "###" { return }
+QSHARP = "####" { return }
+EOL = [ \t\n\r]+ { return }
+LWavy = _ __ "{" _ __ { return }
+RWavy = _ __ "}" _ __ { return }
+LSq = _ __ "[" _ __ { return }
+RSq = _ __ "]" _ __ { return }
+Comma = _ __ "," _ __ { return }
+String "String"
+  = _ ([a-zA-Z0-9!?_\\-\\$\\.\\:\\=\[\]\{\}\,]+_?)+ { return text(); }
+ExprString "Expression String"
+  = _ ([a-zA-Z0-9!?_\\$\\.\\:\[\]\{\}\,]+_?)+ { return text(); }
+AddressString "Address String"
+  = _ ("0x"[a-zA-Z0-9]+) _ { return text(); }
+ENSString "ENS String"
+  = _ ([a-zA-Z0-9]+ ".")+ "eth" _ { return text(); }
