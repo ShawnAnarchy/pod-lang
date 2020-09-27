@@ -47,12 +47,27 @@ Solutions
 A_SOLUTION
   = head:(
     SolutionName
+    TargetLawClause?
     CommandClause?
     LawClause? _ __) {
+	  var lawObj = {}
+
+      if (head[3]){
+        lawObj.lawName = head[3][0][0]
+        lawObj.laws = head[3][0][1]
+        if (head[1]){
+          lawObj.id = head[1]
+        } else {
+          lawObj.id = "LAW_ID_NEW"
+        }
+      } else {
+        lawObj = undefined
+      }
+    
       return {
         solutionName: head[0],
-        commandObj: head[1],
-        lawObj: head[2]
+        commandObj: head[2],
+        lawObj: lawObj
       }
     }
 
@@ -74,6 +89,9 @@ CommandTitle = String _ __ { return }
 LawPlaceholder = String  _ __ { return }
 _LawTitle = head:(String  _ __) { return head.filter(a=>a)[0].trim() }
 LawTitle = head:(QSHARP _LawTitle) { return head.filter(a=>a)[0].trim() }
+TargetLawClause =  head:(_ __ TICK _ "TARGET_LAW_ID" _ "=" _ LAW_ID_EXPR _ __) { return parseInt(head.filter(a=>a)[2].join("")) }
+LAW_ID_EXPR = [0-9]+
+
 CommandLogic
   = "Subset.new" head:SubsetName _ __ tail:CommandLogic* {
   	return { new: head, assign: "", vestings: tail[0].vestings }

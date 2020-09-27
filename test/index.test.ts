@@ -27,8 +27,9 @@ describe('Creation of Ship Management', () => {
     expect(parsed.solutions[0].commandObj.vestings.length).toBe(1);
     expect(parsed.solutions[0].commandObj.vestings[0].to).toBe("NEW_SUBSET");
     expect(parsed.solutions[0].commandObj.vestings[0].vesting).toBe(2000);
-    expect(parsed.solutions[0].lawObj[0][0]).toBe("Permission of a individual shipping business");
-    expect(parsed.solutions[0].lawObj[0][1][0]).toBe("Anyone can let customers move other islands by charging arbitrary fee.");
+    expect(parsed.solutions[0].lawObj.id).toBe("LAW_ID_NEW");
+    expect(parsed.solutions[0].lawObj.lawName).toBe("Permission of a individual shipping business");
+    expect(parsed.solutions[0].lawObj.laws[0]).toBe("Anyone can let customers move other islands by charging arbitrary fee.");
   });
   it('has a solution which assigns existing administration', () => {
     expect(parsed.solutions[1].commandObj.assign).toBe("shipAdmin.aogashima.onthe.eth");
@@ -68,10 +69,23 @@ describe('Law addition without the command', () => {
     expect(parsed.problem).toBe("Ships are dangerous in these days!");
   });
   it('has laws', () => {
-    expect(parsed.solutions[0].lawObj[0][0]).toBe("Prohibition of the ships");
-    expect(parsed.solutions[0].lawObj[0][1][0]).toBe("You can't have any ships.");
+    expect(parsed.solutions[0].lawObj.id).toBe("LAW_ID_NEW");
+    expect(parsed.solutions[0].lawObj.lawName).toBe("Prohibition of the ships");
+    expect(parsed.solutions[0].lawObj.laws[0]).toBe("You can't have any ships.");
   });
 })
+describe('Law overwrite without the command', () => {
+  const parsed = global.parser.parse(readFileSync('./aogashima/laws/sma_update_laws.leg').toString());
+  it('has a problem', () => {
+    expect(parsed.problem).toBe("Ships are dangerous in these days!");
+  });
+  it('has laws', () => {
+    expect(parsed.solutions[0].lawObj.id).toBe(108);
+    expect(parsed.solutions[0].lawObj.lawName).toBe("Prohibition of the ships");
+    expect(parsed.solutions[0].lawObj.laws[0]).toBe("You can't have any ships.");
+  });
+})
+
 
 
 describe('Negative Vesting of Ship Management', () => {
